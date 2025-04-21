@@ -1,0 +1,16 @@
+{
+  "uuSubAppDataStore": {
+    "primary": {
+      "type": "uuAppObjectStore",
+      "realization": "MongoDB",
+      "schemaMap": {
+        "ciprMain": {
+          "realization": "dao/CiprMainMongo"
+        },
+        "break": {
+          "realization": "dao/BreakMongo"
+        }
+      }
+    }
+  }
+}

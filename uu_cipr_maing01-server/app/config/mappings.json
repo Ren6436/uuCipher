@@ -1,0 +1,76 @@
+{
+  "{vendor}-{uuApp}-{uuSubApp}": {
+    "useCaseMap": {
+      "sys/uuSubAppInstance/commence": {
+        "realization": "api/controllers/CiprMainController.commence",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/init": {
+        "realization": "api/controllers/CiprMainController.init",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/_initFinalize": {
+        "realization": "api/controllers/CiprMainController._initFinalize",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/_initFinalizeRollback": {
+        "realization": "api/controllers/CiprMainController._initFinalizeRollback",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/load": {
+        "realization": "api/controllers/CiprMainController.load",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/loadBasicData": {
+        "realization": "api/controllers/CiprMainController.loadBasicData",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/setStateClosed": {
+        "realization": "api/controllers/CiprMainController.setStateClosed",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/_setStateClosedFinalize": {
+        "realization": "api/controllers/CiprMainController._setStateClosedFinalize",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/clear": {
+        "realization": "api/controllers/CiprMainController.clear",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "sys/uuAppWorkspace/_clearFinalize": {
+        "realization": "api/controllers/CiprMainController._clearFinalize",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "defaultUve": {
+        "realization": "index.html",
+        "httpMethod": "GET",
+        "type": "UVE"
+      },
+      "sys/uuAppWorkspace/initUve": {
+        "realization": "index.html",
+        "httpMethod": "GET",
+        "type": "UVE"
+      },
+      "sys/uuAppWorkspace/apiConsole": {
+        "realization": "api-console.html",
+        "httpMethod": "GET",
+        "type": "UVE"
+      },
+      "break/create": {
+        "realization": "api/controllers/BreakController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      }
+    }
+  }
+}

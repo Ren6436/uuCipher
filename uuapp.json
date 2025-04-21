@@ -1,0 +1,32 @@
+{
+  "product": "uu_cipr_maing01",
+  "version": "0.1.0",
+  "license": "License Commercial",
+  "description": {
+    "en": "",
+    "cs": ""
+  },
+  "devkit": {
+    "development": {
+      "uuAppBoxRegistryBaseUri": "----- VALUE REQUIRED -----",
+      "uuCloudUniverseBaseUri": "----- VALUE REQUIRED -----",
+      "uuCloudLogStoreBaseUri": "----- VALUE REQUIRED -----"
+    }
+  },
+  "vendor": {
+    "productPortalUri": null,
+    "licenseAgreementUri": null,
+    "relatedProductUriList": [],
+    "organizationName": null,
+    "organizationOid": null,
+    "leadingAuthorList": [],
+    "otherAuthorList": [],
+    "usedTechnologies": {
+      "technologyList": [],
+      "otherTechnologyList": []
+    }
+  },
+  "uu_cipr_maing01-server": {},
+  "uu_cipr_maing01-uuscriptlib": {},
+  "uu_cipr_maing01-hi": {}
+}
