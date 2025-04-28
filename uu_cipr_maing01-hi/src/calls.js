@@ -41,6 +41,11 @@ const Calls = {
   getCommandUri(useCase, baseUri = Environment.appBaseUri) {
     return (!baseUri.endsWith("/") ? baseUri + "/" : baseUri) + (useCase.startsWith("/") ? useCase.slice(1) : useCase);
   },
+
+  breakCreate(dtoIn) {
+    let commandUri = Calls.getCommandUri("break/create");
+    return Calls.call("post", commandUri, dtoIn);
+  },
 };
 
 export default Calls;

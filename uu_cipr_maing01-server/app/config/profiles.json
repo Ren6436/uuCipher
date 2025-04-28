@@ -60,7 +60,7 @@
       },
       "break/create": {
         "sysStateList": ["active"],
-        "profileList": ["Authenticated"]
+        "profileList": ["Public"]
       },
       "decrypt/create": {
         "sysStateList": ["active"],

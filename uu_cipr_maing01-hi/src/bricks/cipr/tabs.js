@@ -1,42 +1,46 @@
 //@@viewOn:imports
-import { useState } from "uu5g05";
+//import { useState } from "uu5g05";
 import UU5 from "uu5g04";
 import "uu5g04-bricks";
+import { createVisualComponent } from "uu5g05";
 import { Box } from "uu5g05-elements";
 import Config from "./config/config.js";
-import Encryp from "./encrypt.js";
-import Decrypt from "./decrypt.js";
-import Break from "./break.js";
+import { withRoute } from "uu_plus4u5g02-app";
+import Encrypt from "./encrypt/encrypt.js";
+import Decrypt from "./decrypt/decrypt.js";
+import Break from "./break/break.js";
+
 //@@viewOff:imports
 
-//@@viewOn:constants
-//@@viewOff:constants
+let Tab = createVisualComponent({
+  //@@viewOn:statics
+  uu5Tag: Config.TAG + "Tab",
+  //@@viewOff:statics
 
-//@@viewOn:css
-const Css = {
-  main: () => Config.Css.css({}),
-};
-//@@viewOff:css
+  render() {
+    //@@viewOn:render
+    return (
+      <Box style={{ width: 640, margin: "24px auto" }}>
+        <UU5.Bricks.Tabs fade>
+          <UU5.Bricks.Tabs.Item header="Encryption">
+            <Encrypt />
+          </UU5.Bricks.Tabs.Item>
+          <UU5.Bricks.Tabs.Item header="Decryption">
+            <Decrypt />
+          </UU5.Bricks.Tabs.Item>
+          <UU5.Bricks.Tabs.Item header="Break Encryption">
+            <Break />
+          </UU5.Bricks.Tabs.Item>
+        </UU5.Bricks.Tabs>
+      </Box>
+    );
+    //@@viewOff:render
+  },
+});
 
-//@@viewOn:helpers
-//@@viewOff:helpers
+Tab = withRoute(Tab, { authenticated: true });
 
-export default function Tabs({ onSubmit = () => {} }) {
-  //@@viewOn:render
-  return (
-    <Box style={{ width: 640, margin: "24px auto" }}>
-      <UU5.Bricks.Tabs fade>
-        <UU5.Bricks.Tabs.Item header="Encryption">
-          <Encryp onSubmit={onSubmit} />
-        </UU5.Bricks.Tabs.Item>
-        <UU5.Bricks.Tabs.Item header="Decryption">
-          <Decrypt onSubmit={onSubmit} />
-        </UU5.Bricks.Tabs.Item>
-        <UU5.Bricks.Tabs.Item header="Break Encrypted Text">
-          <Break onSubmit={onSubmit} />
-        </UU5.Bricks.Tabs.Item>
-      </UU5.Bricks.Tabs>
-    </Box>
-  );
-  //@@viewOff:render
-}
+//@@viewOn:exports
+export { Tab };
+export default Tab;
+//@@viewOff:exports
