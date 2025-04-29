@@ -1,5 +1,7 @@
 /* eslint-disable */
 const breakCreateDtoInType = shape({
-  value: string(1000).isRequired(),
+  value: shape({
+    value: string(1000).isRequired()
+  }),
   file: binary()
 });
