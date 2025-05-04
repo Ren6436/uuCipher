@@ -1,9 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils } from "uu5g05";
-import { Box } from "uu5g05-elements";
-import { Form, FormText, SubmitButton, CancelButton, FormFile } from "uu5g05-forms";
+import { createVisualComponent, useState } from "uu5g05";
+import { Box, useAlertBus } from "uu5g05-elements";
+import { Form, SubmitButton, FormFile, FormTextArea, TextArea, ResetButton } from "uu5g05-forms";
 import Config from "../config/config";
-
+import Calls from "../../../calls";
 //@@viewOff:imports
 
 const Decrypt = createVisualComponent({
@@ -11,38 +11,84 @@ const Decrypt = createVisualComponent({
   uu5Tag: Config.TAG + "CreateForm",
   //@@viewOff:statics
 
-  //@@viewOn:propTypes
-  propTypes: {
-    onSubmit: PropTypes.func,
-    onCancel: PropTypes.func,
-  },
-  //@@viewOff:propTypes
+  render() {
+    const { addAlert } = useAlertBus();
+    const [result, setResult] = useState(null);
 
-  //@@viewOn:defaultProps
-  defaultProps: {
-    onSubmit: () => {},
-    onCancel: () => {},
-  },
-  //@@viewOff:defaultProps
+    async function handleSubmit(values) {
+      try {
+        const res = await Calls.decryptCreate(values);
+        const text = res.data?.result ?? "";
 
-  render(props) {
-    //@@viewOn:render
-    const { elementProps } = Utils.VisualComponent.splitProps(props);
+        setResult(text);
+
+        addAlert({
+          message: "Decryption successful!",
+          priority: "success",
+          durationMs: 2000,
+        });
+
+        return res;
+      } catch (error) {
+        setResult(null);
+        addAlert({
+          message: "Decryption failed: " + error.message,
+          priority: "error",
+          durationMs: 3000,
+        });
+        throw error;
+      }
+    }
+
+    function handleResetClick() {
+      setResult(null);
+    }
 
     return (
       <Box style={{ width: 640, padding: 20 }}>
-      <Form {...elementProps} onSubmit={props.onSubmit}>
-        <FormText name="text" label="Enter text" />
-        <FormText name="key" label="Enter key" required/>
-        <FormFile name="file" label="File" />
-        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", paddingTop: 8 }}>
-          <CancelButton onClick={props.onCancel}>Cancel</CancelButton>
-          <SubmitButton>Decryption</SubmitButton>
-        </div>
-      </Form>
+        <Form onSubmit={handleSubmit}>
+          <FormTextArea
+            name="value" 
+            label="text"
+            placeholder="Paste your text here"
+            autoResize={true}
+          />
+          <FormTextArea
+            name="key" 
+            label="key"
+            placeholder="Paste your text here"
+            autoResize={true}
+          />
+          <FormFile 
+            name="file" 
+            label="Or upload file" 
+            accept=".txt,.enc"
+          />
+          <div style={{ 
+            display: "flex", 
+            justifyContent: "flex-end", 
+            paddingTop: 16,
+            gap: 8
+          }}>
+            <ResetButton colorScheme="neutral" onClick={handleResetClick}>
+              Reset
+            </ResetButton>
+            <SubmitButton>
+            Decrypt
+            </SubmitButton>
+          </div>
+        </Form>
+
+        {result && (
+          <TextArea
+            label="Decryption Result"
+            value={result}
+            readOnly={true}
+            autoResize={true}
+          />
+        )}
       </Box>
     );
-    //@@viewOff:render
   },
 });
 

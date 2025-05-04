@@ -46,6 +46,14 @@ const Calls = {
     let commandUri = Calls.getCommandUri("break/create");
     return Calls.call("post", commandUri, dtoIn);
   },
+  encryptCreate(dtoIn) {
+    let commandUri = Calls.getCommandUri("encrypt/create");
+    return Calls.call("post", commandUri, dtoIn);
+  },
+  decryptCreate(dtoIn) {
+    let commandUri = Calls.getCommandUri("decrypt/create");
+    return Calls.call("post", commandUri, dtoIn);
+  },
 };
 
 export default Calls;

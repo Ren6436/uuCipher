@@ -1,25 +1,25 @@
-"use strict";
+"use strick";
 const { Validator } = require("uu_appg01_server").Validation;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 
-const Errors = require("../../api/errors/break-errors.js");
-const Warnings = require("../../api/warnings/break-warning.js");
+const Errors = require("../../api/errors/decrypt-errors.js");
+const Warnings = require("../../api/warnings/decrypt-warning.js");
 
 const axios = require("axios");
 const FormData = require("form-data");
 
-class BreakAbl {
+class DecryptAbl {
   constructor() {
     this.validator = Validator.load();
-    this.dao = DaoFactory.getDao("break");
+    this.dao = DaoFactory.getDao("decrypt");
   }
 
   async create(awid, dtoIn) {
     let uuAppErrorMap = {};
-    console.log("res",dtoIn)
+    console.log(dtoIn);
 
-    const validationResult = this.validator.validate("breakCreateDtoInType", dtoIn);
+    const validationResult = this.validator.validate("decryptCreateDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
@@ -27,27 +27,33 @@ class BreakAbl {
       Warnings.Create.UnsupportedKeys.code,
       Errors.Create.InvalidDtoIn,
     );
-    console.log("after walid", dtoIn)
+
     const formData = new FormData();
     if (dtoIn.data?.value?.value) {
       formData.append("text", dtoIn.data.value.value);
     }
-    if (dtoIn.file) {
-      formData.append("file", dtoIn.data.value.file);
+    if (dtoIn.data?.value?.key) {
+      formData.append("key", dtoIn.data.value.key);
     }
-    console.log("formData",formData)
+    if (dtoIn.file) {
+      formData.append("file", dtoIn.file);
+    }
+
     let result;
     try {
-      const response = await axios.post("http://localhost:5555/api/break", formData);
+      const response = await axios.post("http://localhost:5555/api/decrypt", formData);
+      console.log("response", response);
       result = Object.values(response.data).join("");
-      } catch (e) {
-        throw new Errors.Create.ExternalCallFailed({
-          cause: e.message,
-          uuAppErrorMap,
-        })
-      }
+      console.log("response", result);
+    } catch (e) {
+      throw new Errors.Create.ExternalCallFalled({
+        cause: e.message,
+        uuAppErrorMap,
+      })
+    }
 
     dtoIn.awid = awid;
+
     const dtoOut = {
       result,
       uuAppErrorMap,
@@ -57,4 +63,4 @@ class BreakAbl {
   }
 }
 
-module.exports = new BreakAbl();
+module.exports = new DecryptAbl();

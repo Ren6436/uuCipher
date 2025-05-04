@@ -3,23 +3,22 @@ const { Validator } = require("uu_appg01_server").Validation;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 
-const Errors = require("../../api/errors/break-errors.js");
-const Warnings = require("../../api/warnings/break-warning.js");
+const Errors = require("../../api/errors/encrypt-errors.js");
+const Warnings = require("../../api/warnings/encrypt-warning.js");
 
 const axios = require("axios");
 const FormData = require("form-data");
 
-class BreakAbl {
+class EncryptAbl {
   constructor() {
     this.validator = Validator.load();
-    this.dao = DaoFactory.getDao("break");
+    this.dao = DaoFactory.getDao("encrypt");
   }
 
   async create(awid, dtoIn) {
     let uuAppErrorMap = {};
-    console.log("res",dtoIn)
 
-    const validationResult = this.validator.validate("breakCreateDtoInType", dtoIn);
+    const validationResult = this.validator.validate("encryptCreateDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
@@ -27,34 +26,38 @@ class BreakAbl {
       Warnings.Create.UnsupportedKeys.code,
       Errors.Create.InvalidDtoIn,
     );
-    console.log("after walid", dtoIn)
+
     const formData = new FormData();
     if (dtoIn.data?.value?.value) {
       formData.append("text", dtoIn.data.value.value);
     }
     if (dtoIn.file) {
-      formData.append("file", dtoIn.data.value.file);
+      formData.append("file", dtoIn.file);
     }
-    console.log("formData",formData)
+
     let result;
     try {
-      const response = await axios.post("http://localhost:5555/api/break", formData);
-      result = Object.values(response.data).join("");
-      } catch (e) {
-        throw new Errors.Create.ExternalCallFailed({
-          cause: e.message,
-          uuAppErrorMap,
-        })
-      }
+      const response = await axios.post("http://localhost:5555/api/encrypt", formData);
+      result = {
+        cipherText: response.data.cipherText,
+        key: response.data.key,
+      };
+      console.log("response", result);
+    } catch (e) {
+      throw new Errors.Create.ExternalCallFalled({
+        cause: e.message,
+        uuAppErrorMap,
+      })
+    }
 
     dtoIn.awid = awid;
+
     const dtoOut = {
       result,
       uuAppErrorMap,
     };
-    console.log("dtoout",dtoOut)
     return dtoOut;
   }
 }
 
-module.exports = new BreakAbl();
+module.exports = new EncryptAbl();

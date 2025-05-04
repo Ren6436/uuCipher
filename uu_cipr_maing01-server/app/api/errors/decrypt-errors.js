@@ -1,4 +1,4 @@
-"use strict";
+"use strick";
 const CiprMainUseCaseError = require("./cipr-main-use-case-error");
 
 const Create = {
@@ -8,19 +8,19 @@ const Create = {
     constructor() {
       super(...arguments);
       this.code = `${Create.UC_CODE}invalidDtoIn`;
-      this.message = "DtoIn is not valid.";
+      this.message = "DtoIn is not valid";
     }
   },
-  ExternalCallFailed: class extends CiprMainUseCaseError {
+
+  ExternalCallFalled: class extends CiprMainUseCaseError {
     constructor(cause, uuAppErrorMap) {
       super(...arguments);
-      this.code = `${Create.UC_CODE}externalCallFailed`;
       this.message = "Call to external service failed.";
-      this.cause = cause;
+      this.caused = cause;
       this.uuAppErrorMap = uuAppErrorMap;
     }
   }
-};
+}
 
 module.exports = {
   Create,

@@ -70,6 +70,16 @@
         "realization": "api/controllers/BreakController.create",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "encrypt/create": {
+        "realization": "api/controllers/EncryptController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "decrypt/create": {
+        "realization": "api/controllers/DecryptController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

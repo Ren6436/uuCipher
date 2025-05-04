@@ -1,7 +1,7 @@
 //@@viewOn:imports
-import { createVisualComponent } from "uu5g05";
+import { createVisualComponent, useState } from "uu5g05";
 import { Box, useAlertBus } from "uu5g05-elements";
-import { Form, FormText, SubmitButton, FormFile } from "uu5g05-forms";
+import { Form, SubmitButton, FormFile, FormTextArea, TextArea, ResetButton } from "uu5g05-forms";
 import Config from "../config/config";
 import Calls from "../../../calls";
 //@@viewOff:imports
@@ -13,18 +13,24 @@ const Break = createVisualComponent({
 
   render() {
     const { addAlert } = useAlertBus();
+    const [result, setResult] = useState(null);
 
     async function handleSubmit(values) {
       try {
+        const res = await Calls.breakCreate(values);
+        const text = res.data?.result ?? "";
 
-        const result = await Calls.breakCreate(values);
+        setResult(text);
+
         addAlert({
           message: "Decryption successful!",
           priority: "success",
           durationMs: 2000,
         });
-        return result;
+
+        return res;
       } catch (error) {
+        setResult(null);
         addAlert({
           message: "Decryption failed: " + error.message,
           priority: "error",
@@ -34,14 +40,18 @@ const Break = createVisualComponent({
       }
     }
 
+    function handleResetClick() {
+      setResult(null);
+    }
+
     return (
       <Box style={{ width: 640, padding: 20 }}>
         <Form onSubmit={handleSubmit}>
-          <FormText 
+          <FormTextArea
             name="value" 
-            label="Encrypted text" 
-            required 
+            label="Encrypted text"
             placeholder="Paste your encrypted text here"
+            autoResize={true}
           />
           <FormFile 
             name="file" 
@@ -54,11 +64,23 @@ const Break = createVisualComponent({
             paddingTop: 16,
             gap: 8
           }}>
+            <ResetButton colorScheme="neutral" onClick={handleResetClick}>
+              Reset
+            </ResetButton>
             <SubmitButton>
-              Break Encryption
+            Break Encryption
             </SubmitButton>
           </div>
         </Form>
+
+        {result && (
+          <TextArea
+            label="Decryption Result"
+            value={result}
+            readOnly={true}
+            autoResize={true}
+          />
+        )}
       </Box>
     );
   },
