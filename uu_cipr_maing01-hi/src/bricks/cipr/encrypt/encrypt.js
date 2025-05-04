@@ -53,14 +53,9 @@ const Encrypt = createVisualComponent({
         <Form onSubmit={handleSubmit}>
           <FormTextArea
             name="value"
-            label="Text to decrypt"
+            label="Text to encrypt"
             placeholder="Paste your text here"
             autoResize={true}
-          />
-          <FormFile 
-            name="file" 
-            label="Or upload txt file" 
-            accept=".txt,.enc"
           />
           <div style={{ 
             display: "flex", 

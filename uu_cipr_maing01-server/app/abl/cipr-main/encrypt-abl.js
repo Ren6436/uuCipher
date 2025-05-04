@@ -31,9 +31,6 @@ class EncryptAbl {
     if (dtoIn.data?.value?.value) {
       formData.append("text", dtoIn.data.value.value);
     }
-    if (dtoIn.file) {
-      formData.append("file", dtoIn.file);
-    }
 
     let result;
     try {
@@ -42,7 +39,6 @@ class EncryptAbl {
         cipherText: response.data.cipherText,
         key: response.data.key,
       };
-      console.log("response", result);
     } catch (e) {
       throw new Errors.Create.ExternalCallFalled({
         cause: e.message,

@@ -53,11 +53,6 @@ const Break = createVisualComponent({
             placeholder="Paste your encrypted text here"
             autoResize={true}
           />
-          <FormFile 
-            name="file" 
-            label="Or upload encrypted file" 
-            accept=".txt,.enc"
-          />
           <div style={{ 
             display: "flex", 
             justifyContent: "flex-end", 

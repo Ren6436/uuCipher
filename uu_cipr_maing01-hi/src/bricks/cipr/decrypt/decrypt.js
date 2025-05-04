@@ -1,7 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, useState } from "uu5g05";
 import { Box, useAlertBus } from "uu5g05-elements";
-import { Form, SubmitButton, FormFile, FormTextArea, TextArea, ResetButton } from "uu5g05-forms";
+import { Form, SubmitButton, FormTextArea, TextArea, ResetButton } from "uu5g05-forms";
 import Config from "../config/config";
 import Calls from "../../../calls";
 //@@viewOff:imports
@@ -58,11 +58,6 @@ const Decrypt = createVisualComponent({
             label="key"
             placeholder="Paste your text here"
             autoResize={true}
-          />
-          <FormFile 
-            name="file" 
-            label="Or upload file" 
-            accept=".txt,.enc"
           />
           <div style={{ 
             display: "flex", 

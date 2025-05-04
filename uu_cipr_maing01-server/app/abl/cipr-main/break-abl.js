@@ -17,7 +17,6 @@ class BreakAbl {
 
   async create(awid, dtoIn) {
     let uuAppErrorMap = {};
-    console.log("res",dtoIn)
 
     const validationResult = this.validator.validate("breakCreateDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
@@ -27,15 +26,12 @@ class BreakAbl {
       Warnings.Create.UnsupportedKeys.code,
       Errors.Create.InvalidDtoIn,
     );
-    console.log("after walid", dtoIn)
+
     const formData = new FormData();
     if (dtoIn.data?.value?.value) {
       formData.append("text", dtoIn.data.value.value);
     }
-    if (dtoIn.file) {
-      formData.append("file", dtoIn.data.value.file);
-    }
-    console.log("formData",formData)
+
     let result;
     try {
       const response = await axios.post("http://localhost:5555/api/break", formData);
@@ -52,7 +48,6 @@ class BreakAbl {
       result,
       uuAppErrorMap,
     };
-    console.log("dtoout",dtoOut)
     return dtoOut;
   }
 }
