@@ -52,6 +52,7 @@
   },
   "Menu": {
     "home": "Welcome",
+    "cipr": "Cipr",
     "about": "About Application"
   }
 }
